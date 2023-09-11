@@ -1,40 +1,30 @@
-package com.example.module_6_sprint_2.model;
+package com.example.module_6_sprint_2.authen_arthor.payload.request;
 
-import javax.persistence.*;
+import com.example.module_6_sprint_2.model.Role;
 
-@Entity
-public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idCustomer;
+public class SignupRequest {
+    private String username;
+    private String password;
+    private boolean flagDelete;
+    private Role role;
+
     private String nameCustomer;
     private String identityCardCustomer;
     private String telCustomer;
     private String emailCustomer;
-    private boolean flagDelete;
-    @OneToOne
-    @JoinColumn(name = "id_account")
-    private Account account;
 
-    public Customer() {
+    public SignupRequest() {
     }
 
-    public Customer(Integer idCustomer, String nameCustomer, String identityCardCustomer, String telCustomer, String emailCustomer, boolean flagDelete, Account account) {
-        this.idCustomer = idCustomer;
+    public SignupRequest(String username, String password, boolean flagDelete, Role role, String nameCustomer, String identityCardCustomer, String telCustomer, String emailCustomer) {
+        this.username = username;
+        this.password = password;
+        this.flagDelete = flagDelete;
+        this.role = role;
         this.nameCustomer = nameCustomer;
         this.identityCardCustomer = identityCardCustomer;
         this.telCustomer = telCustomer;
         this.emailCustomer = emailCustomer;
-        this.flagDelete = flagDelete;
-        this.account = account;
-    }
-
-    public Integer getIdCustomer() {
-        return idCustomer;
-    }
-
-    public void setIdCustomer(Integer idCustomer) {
-        this.idCustomer = idCustomer;
     }
 
     public String getNameCustomer() {
@@ -69,6 +59,22 @@ public class Customer {
         this.emailCustomer = emailCustomer;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public boolean isFlagDelete() {
         return flagDelete;
     }
@@ -77,11 +83,11 @@ public class Customer {
         this.flagDelete = flagDelete;
     }
 
-    public Account getAccount() {
-        return account;
+    public Role getRole() {
+        return role;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

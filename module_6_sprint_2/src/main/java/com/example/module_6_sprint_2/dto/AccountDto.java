@@ -1,41 +1,36 @@
-package com.example.module_6_sprint_2.model;
+package com.example.module_6_sprint_2.dto;
 
-import javax.persistence.*;
+import com.example.module_6_sprint_2.model.Role;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
-@Entity
-public class Account{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idAccount;
+public class AccountDto implements Serializable {
+    private static final long serialVersionUID = 5926468583005150707L;
+    private int idAccount;
+    @NotBlank
     private String username;
-    private boolean flagDelete;
+    @NotBlank
     private String password;
-    @ManyToOne
-    @JoinColumn(name = "id_role")
+    private boolean flagDelete;
     private Role role;
 
-    public Account() {
+    public AccountDto() {
     }
 
-    public Account(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    public Account(Integer idAccount, String username, boolean flagDelete, String password, Role role) {
+    public AccountDto(int idAccount, String username, String password, boolean flagDelete, Role role) {
         this.idAccount = idAccount;
         this.username = username;
-        this.flagDelete = flagDelete;
         this.password = password;
+        this.flagDelete = flagDelete;
         this.role = role;
     }
 
-    public Integer getIdAccount() {
+    public int getIdAccount() {
         return idAccount;
     }
 
-    public void setIdAccount(Integer idAccount) {
+    public void setIdAccount(int idAccount) {
         this.idAccount = idAccount;
     }
 

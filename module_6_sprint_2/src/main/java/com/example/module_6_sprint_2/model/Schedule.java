@@ -7,7 +7,9 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idSchedule;
+    @Column(columnDefinition = "date")
     private String dateDeparture;
+    @Column(columnDefinition = "time")
     private String timeDeparture;
     @ManyToOne
     @JoinColumn(name = "id_ship")
