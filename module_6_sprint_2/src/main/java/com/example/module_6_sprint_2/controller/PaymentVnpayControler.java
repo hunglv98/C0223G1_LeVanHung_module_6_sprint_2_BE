@@ -1,6 +1,14 @@
 package com.example.module_6_sprint_2.controller;
 
 import com.example.module_6_sprint_2.config_vnpay.PaymentConfig;
+import com.example.module_6_sprint_2.model.Customer;
+import com.example.module_6_sprint_2.model.Seat;
+import com.example.module_6_sprint_2.model.Ticket;
+import com.example.module_6_sprint_2.repository.ITicketRepo;
+import com.example.module_6_sprint_2.service.ICustomerService;
+import com.example.module_6_sprint_2.service.ISeatService;
+import com.example.module_6_sprint_2.service.ITicketService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,15 +21,22 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/vnpay")
 public class PaymentVnpayControler {
+    @Autowired
+    private ICustomerService customerService;
+    @Autowired
+    private ITicketService ticketService;
+    @Autowired
+    private ISeatService seatService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> create()
+    public ResponseEntity<?> create(@RequestParam int total)
             throws UnsupportedEncodingException {
 
         String orderType = "170000";
@@ -29,8 +44,8 @@ public class PaymentVnpayControler {
 //        String bankCode = req.getParameter("bankCode");
 
 
-//        String amount = String.valueOf(total * 100);
-        String amount = "10000000";
+        String amount = String.valueOf(total * 100);
+//        String amount = "10000000";
         String vnp_TxnRef = PaymentConfig.getRandomNumber(8);
 //        String vnp_IpAddr = Config.getIpAddress(req);
         String vnp_TmnCode = PaymentConfig.vnp_TmnCode;
@@ -90,30 +105,23 @@ public class PaymentVnpayControler {
         String vnp_SecureHash = PaymentConfig.hmacSHA512(PaymentConfig.vnp_HashSecret, hashData.toString());
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
         String paymentUrl = PaymentConfig.vnp_PayUrl + "?" + queryUrl;
-//        com.google.gson.JsonObject job = new JsonObject();
-//        job.addProperty("code", "00");
-//        job.addProperty("message", "success");
-//        job.addProperty("data", paymentUrl);
-//        Gson gson = new Gson();
-//        resp.getWriter().write(gson.toJson(job));
-//        PaymentResDto paymentResDto = new PaymentResDto();
-//        paymentResDto.setStatus("OK");
-//        paymentResDto.setMessage("SUCCESSFULLY");
-//        paymentResDto.setURL(paymentUrl);
         return new ResponseEntity<>(paymentUrl, HttpStatus.OK);
     }
 
-    @GetMapping("/return")
-    public String showReturn(@RequestParam String vnp_Amount,
-                             @RequestParam String vnp_ResponseCode
-
-            , HttpServletRequest request, Model model) {
-        if(vnp_ResponseCode.equals("00")){
-
-            model.addAttribute("message","Payment Successfully");
-        }else {
-            model.addAttribute("message","Payment Failed");
+    @PutMapping("/return/{username}/{listIdSeat}")
+    public ResponseEntity<?> showReturn(@PathVariable String username,@PathVariable List<Integer> listIdSeat ) {
+        Customer customer = customerService.getCustomerByAccount_Username(username);
+        String date = String.valueOf(LocalDate.now());
+        for (Integer i: listIdSeat) {
+            Seat seat = seatService.getSeatByIdSeat(i);
+            seat.setFlagPayment(true);
+            seatService.save(seat);
+            Ticket ticket = new Ticket();
+            ticket.setDateBooking(date);
+            ticket.setCustomer(customer);
+            ticket.setSeat(seat);
+            ticketService.save(ticket);
         }
-        return "return";
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -28,4 +28,9 @@ public class SeatService implements ISeatService {
     public Seat getSeatByIdSeat(int id) {
         return seatRepo.getSeatByIdSeat(id);
     }
+
+    @Override
+    public void save(Seat seat) {
+        seatRepo.save(seat);
+    }
 }

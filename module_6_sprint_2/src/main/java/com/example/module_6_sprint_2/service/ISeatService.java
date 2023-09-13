@@ -10,4 +10,5 @@ public interface ISeatService {
     List<Seat> findAllBySchedule_IdSchedule(int id);
     Page<Seat> findAllBySchedule_IdScheduleAndTypeSeat_IdTypeSeat(Pageable pageable, int idSchedule, int typeSeat);
     Seat getSeatByIdSeat(int id);
+    void save(Seat seat);
 }
