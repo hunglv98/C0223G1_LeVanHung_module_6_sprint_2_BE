@@ -19,4 +19,9 @@ public class CustomerService implements ICustomerService {
     public Customer getCustomerByAccount_Username(String username) {
         return customerRepo.getCustomerByAccount_Username(username);
     }
+
+    @Override
+    public Customer getCustomerByEmailCustomer(String email) {
+        return customerRepo.getCustomerByEmailCustomer(email);
+    }
 }

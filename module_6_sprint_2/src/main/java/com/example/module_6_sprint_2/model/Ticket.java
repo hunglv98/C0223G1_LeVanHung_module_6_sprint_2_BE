@@ -9,6 +9,8 @@ public class Ticket {
     private int idTicket;
     private String dateBooking;
     private boolean flagCancel;
+
+    private String codeTicket;
     @ManyToOne
     @JoinColumn(name = "id_customer")
     private Customer customer;
@@ -19,12 +21,29 @@ public class Ticket {
     public Ticket() {
     }
 
+    public Ticket(int idTicket, String dateBooking, boolean flagCancel, String codeTicket, Customer customer, Seat seat) {
+        this.idTicket = idTicket;
+        this.dateBooking = dateBooking;
+        this.flagCancel = flagCancel;
+        this.codeTicket = codeTicket;
+        this.customer = customer;
+        this.seat = seat;
+    }
+
     public Ticket(int idTicket, String dateBooking, boolean flagCancel, Customer customer, Seat seat) {
         this.idTicket = idTicket;
         this.dateBooking = dateBooking;
         this.flagCancel = flagCancel;
         this.customer = customer;
         this.seat = seat;
+    }
+
+    public String getCodeTicket() {
+        return codeTicket;
+    }
+
+    public void setCodeTicket(String codeTicket) {
+        this.codeTicket = codeTicket;
     }
 
     public int getIdTicket() {

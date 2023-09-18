@@ -13,12 +13,23 @@ import org.springframework.web.bind.annotation.*;
 public class CustomerController {
     @Autowired
     private ICustomerService customerService;
+
     @GetMapping("/{username}")
-    public ResponseEntity<?> getCustomerByUsername(@PathVariable String username){
+    public ResponseEntity<?> getCustomerByUsername(@PathVariable String username) {
         Customer customer = customerService.getCustomerByAccount_Username(username);
-        if (customer==null){
+        if (customer == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(customer,HttpStatus.OK);
+        return new ResponseEntity<>(customer, HttpStatus.OK);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<?> getCustomerByEmail(@RequestParam String email) {
+        Customer customer = customerService.getCustomerByEmailCustomer(email);
+        if (customer == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 }
+
