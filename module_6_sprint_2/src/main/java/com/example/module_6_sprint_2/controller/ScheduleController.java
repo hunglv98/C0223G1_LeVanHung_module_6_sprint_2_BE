@@ -6,7 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.stylesheets.LinkStyle;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -24,7 +28,9 @@ public class ScheduleController {
     @GetMapping("/getAllTime")
     private ResponseEntity<?> getListTime(){
         Set<String> set = scheduleService.findByTimeDeparture();
-        return new ResponseEntity<>(set,HttpStatus.OK);
+        List<String> list = new ArrayList<>(set);
+        Collections.sort(list);
+        return new ResponseEntity<>(list,HttpStatus.OK);
     }
 
     @GetMapping("/getSchedule")

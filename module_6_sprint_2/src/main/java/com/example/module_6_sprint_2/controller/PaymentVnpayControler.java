@@ -116,7 +116,7 @@ public class PaymentVnpayControler {
     public ResponseEntity<?> showReturn(@PathVariable String username,@PathVariable List<Integer> listIdSeat ) {
         Customer customer = customerService.getCustomerByAccount_Username(username);
         String date = String.valueOf(LocalDate.now());
-
+        List<Ticket> codeTickets = new ArrayList<>();
         for (Integer i: listIdSeat) {
             String codeTicket;
             do {
@@ -131,8 +131,10 @@ public class PaymentVnpayControler {
             ticket.setSeat(seat);
             ticket.setCodeTicket(codeTicket);
             ticketService.save(ticket);
+            codeTickets.add(ticket);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        return new ResponseEntity<>(codeTickets,HttpStatus.OK);
     }
 //
 //    @PostMapping("/returnMoney")

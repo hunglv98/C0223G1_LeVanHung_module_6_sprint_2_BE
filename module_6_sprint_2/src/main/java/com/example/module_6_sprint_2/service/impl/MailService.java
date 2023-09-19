@@ -38,7 +38,7 @@ public class MailService {
                 "            margin-bottom: 20px;\">Mã đặt vé của bạn là:</h2>\n" +list1.toString() +
                 "        <p style=\"color: #666666;\n" +
                 "            margin-bottom: 10px;\">Cảm ơn bạn đã đặt vé! Vui lòng sử dụng mã đặt vé trên để hoàn tất quá trình hoàn vé\n" +
-                "            ký:</p>\n" +
+                "            </p>\n" +
                 "        <a href=\"http://localhost:3000/ticketReturn\"  style=\"color: #333333;\n" +
                 "            font-size: 18px;\n" +
                 "            margin-top: 30px;\">" +"Nhấp vào đây để quay lại trang hoàn vé"+   "</a>\n" +
