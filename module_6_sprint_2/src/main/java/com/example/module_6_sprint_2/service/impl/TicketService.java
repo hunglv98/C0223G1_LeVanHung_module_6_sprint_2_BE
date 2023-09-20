@@ -26,7 +26,7 @@ public class TicketService implements ITicketService {
 
     @Override
     public Ticket getTicketById(int id) {
-        return ticketRepo.getTicketByIdTicket(id);
+        return ticketRepo.getTicketByIdTicketAndFlagCancelIsFalse(id);
     }
 
     @Override

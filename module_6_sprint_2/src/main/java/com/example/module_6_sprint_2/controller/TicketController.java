@@ -29,4 +29,13 @@ public class TicketController {
 //        }
         return new ResponseEntity<>(list,HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getTicketByIdTicket (@PathVariable int id){
+        Ticket ticket = ticketService.getTicketById(id);
+        if (ticket==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(ticket,HttpStatus.OK);
+    }
 }

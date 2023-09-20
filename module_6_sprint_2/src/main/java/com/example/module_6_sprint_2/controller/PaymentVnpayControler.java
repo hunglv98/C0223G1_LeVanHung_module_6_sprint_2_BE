@@ -26,6 +26,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
@@ -115,7 +116,7 @@ public class PaymentVnpayControler {
     @PutMapping("/return/{username}/{listIdSeat}")
     public ResponseEntity<?> showReturn(@PathVariable String username,@PathVariable List<Integer> listIdSeat ) {
         Customer customer = customerService.getCustomerByAccount_Username(username);
-        String date = String.valueOf(LocalDate.now());
+        String date = String.valueOf(LocalDateTime.now());
         List<Ticket> codeTickets = new ArrayList<>();
         for (Integer i: listIdSeat) {
             String codeTicket;

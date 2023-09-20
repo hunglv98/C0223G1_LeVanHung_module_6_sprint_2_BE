@@ -26,7 +26,7 @@ public class SeatService implements ISeatService {
 
     @Override
     public Seat getSeatByIdSeat(int id) {
-        return seatRepo.getSeatByIdSeat(id);
+        return seatRepo.getSeatByIdSeatAndFlagPaymentIsFalse(id);
     }
 
     @Override

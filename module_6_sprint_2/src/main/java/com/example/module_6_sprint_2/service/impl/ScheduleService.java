@@ -40,5 +40,10 @@ public class ScheduleService implements IScheduleService {
         return set;
     }
 
+    @Override
+    public Schedule getSchedulesByIdSchedule(int id) {
+        return scheduleRepo.getSchedulesByIdSchedule(id);
+    }
+
 
 }

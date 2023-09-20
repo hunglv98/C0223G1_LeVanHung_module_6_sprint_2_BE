@@ -12,4 +12,6 @@ public interface IScheduleRepo extends JpaRepository<Schedule,Integer> {
     Set<Schedule> findByTimeDeparture(String time);
 
     List<Schedule> findAll();
+
+    Schedule getSchedulesByIdSchedule(int id);
 }

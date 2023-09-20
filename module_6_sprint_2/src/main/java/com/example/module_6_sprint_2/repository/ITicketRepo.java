@@ -10,7 +10,7 @@ import java.util.List;
 public interface ITicketRepo extends JpaRepository<Ticket,Integer> {
     Ticket getTicketByCodeTicketAndFlagCancelIsFalse(String code);
 
-    Ticket getTicketByIdTicket(int id);
+    Ticket getTicketByIdTicketAndFlagCancelIsFalse(int id);
 
     List<Ticket> findByCustomer_EmailCustomerAndFlagCancelIsFalse(String email);
 

@@ -8,4 +8,5 @@ public interface IScheduleService {
     Schedule findByDateDepartureAndTimeDeparture(String date, String time);
     Set<String> findByDateDeparture();
     Set<String> findByTimeDeparture();
+    Schedule getSchedulesByIdSchedule(int id);
 }

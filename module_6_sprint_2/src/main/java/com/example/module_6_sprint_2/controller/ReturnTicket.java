@@ -17,6 +17,7 @@ import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -55,14 +56,14 @@ public class ReturnTicket {
         }
         LocalDate date = LocalDate.parse(ticket.getSeat().getSchedule().getDateDeparture());
         LocalTime time = LocalTime.parse(ticket.getSeat().getSchedule().getTimeDeparture());
-        if(date.isAfter(LocalDate.now())){
+        if(date.isAfter(ChronoLocalDate.from(LocalDateTime.now().plusMinutes(60)))){
             Seat seat = ticket.getSeat();
             seat.setFlagPayment(false);
             seatService.save(seat);
             ticket.setFlagCancel(true);
             ticketService.save(ticket);
             return new ResponseEntity<>(HttpStatus.OK);
-        }else if (time.isAfter(LocalTime.now().plusMinutes(60))&& date.isEqual(LocalDate.now())){
+        }else if (time.isAfter(LocalTime.now().plusMinutes(60))&& date.isEqual(ChronoLocalDate.from(LocalDateTime.now().plusMinutes(60)))){
             Seat seat = ticket.getSeat();
             seat.setFlagPayment(false);
             seatService.save(seat);
@@ -86,11 +87,14 @@ public class ReturnTicket {
         for (Ticket t:list) {
             LocalDate date = LocalDate.parse(t.getSeat().getSchedule().getDateDeparture());
             LocalTime time = LocalTime.parse(t.getSeat().getSchedule().getTimeDeparture());
-            if(date.isAfter(LocalDate.now())){
+            if(date.isAfter(ChronoLocalDate.from(LocalDateTime.now().plusMinutes(60)))){
                 listResult.add(t);
-            }else if (time.isAfter(LocalTime.now().plusMinutes(60))){
+            }else if (time.isAfter(LocalTime.now().plusMinutes(60))&& date.isEqual(ChronoLocalDate.from(LocalDateTime.now().plusMinutes(60)))){
                 listResult.add(t);
             }
+        }
+        if (listResult.size() < 1) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         mailService.sendMail(email,listResult);
         return new ResponseEntity<>(listResult,HttpStatus.OK);
