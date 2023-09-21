@@ -5,6 +5,7 @@ import com.example.module_6_sprint_2.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,6 +16,7 @@ public class CustomerController {
     private ICustomerService customerService;
 
     @GetMapping("/{username}")
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     public ResponseEntity<?> getCustomerByUsername(@PathVariable String username) {
         Customer customer = customerService.getCustomerByAccount_Username(username);
         if (customer == null) {
