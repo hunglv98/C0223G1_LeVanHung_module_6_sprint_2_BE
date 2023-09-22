@@ -116,7 +116,7 @@ public class PaymentVnpayControler {
     @PutMapping("/return/{username}/{listIdSeat}")
     public ResponseEntity<?> showReturn(@PathVariable String username,@PathVariable List<Integer> listIdSeat ) {
         Customer customer = customerService.getCustomerByAccount_Username(username);
-        String date = String.valueOf(LocalDateTime.now());
+
         List<Ticket> codeTickets = new ArrayList<>();
         for (Integer i: listIdSeat) {
             String codeTicket;
@@ -127,7 +127,7 @@ public class PaymentVnpayControler {
             seat.setFlagPayment(true);
             seatService.save(seat);
             Ticket ticket = new Ticket();
-            ticket.setDateBooking(date);
+            ticket.setDateBooking(String.valueOf(LocalDateTime.now()));
             ticket.setCustomer(customer);
             ticket.setSeat(seat);
             ticket.setCodeTicket(codeTicket);

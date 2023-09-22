@@ -24,7 +24,7 @@ public class MailService {
         String senderName = "Công Ty TNHH Dịch vụ và Thương mại HLE";
         String subject = "Mã đặt vé của email "+to;
         String content = "<div style=\"font-family: Arial, sans-serif;\n" +
-                "            background-color: #f5f5f5;\n" +
+                "            background-color: #0a8d91;\n" +
                 "            margin: 0;\n" +
                 "            padding: 20px;\">\n" +
                 "    <div style=\"max-width: 600px;\n" +
